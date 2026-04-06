@@ -4,8 +4,8 @@
 ![ ](https://w.keir.ru/lib/exe/fetch.php?media=external:le-acmesh-ros_640.png)
 
 ### How it works:
-* Script aimed to be a PostHook for acme.sh (https://github.com/Neilpang/acme.sh)
-* After acme.sh renew your certificates on Mikrotik device
+* Script aimed to be a DeployHook for acme.sh (https://github.com/Neilpang/acme.sh)
+* After acme.sh successfully renews your certificates on Mikrotik device
 * The script connects to RouterOS / Mikrotik using DSA Key (without password or user input)
 * Delete previous certificate files
 * Delete the previous certificate
@@ -68,13 +68,13 @@ Login to your Mikrotik and use it's terminal for next two commands. Change usern
 ### acme.sh
 If you getting certificate for the first time and using --issue parameter to acme.sh use something like this:
 ```sh
-acme.sh --issue -d domain --post-hook="/opt/letsencrypt-routeros/letsencrypt-routeros.sh" <...your other command line parameters...>
+acme.sh --issue -d domain --deploy-hook="/opt/letsencrypt-routeros/letsencrypt-routeros.sh" <...your other command line parameters...>
 ```
-...or if you already have issued certificate you can add a post-hook in configuration file for yor domain.
+...or if you already have issued certificate you can add a deploy-hook in configuration file for your domain.
 Config file placement depends on how you install acme.sh but it looks like $LE_WORKING_DIR/$DOMAIN/$DOMAIN.conf where $LE_WORKING_DIR is actual variable defined by acme.sh after --install command and $DOMAIN is your domain name.
-Open you domain config file and set post-hook:
+Open your domain config file and set deploy-hook:
 ```sh
-Le_PostHook='/opt/letsencrypt-routeros/letsencrypt-routeros.sh'
+Le_DeployHook='/opt/letsencrypt-routeros/letsencrypt-routeros.sh'
 ```
 
 ### Usage of the script
