@@ -12,10 +12,15 @@ if [[ -z $ROUTEROS_USER ]] || [[ -z $ROUTEROS_HOST ]] || [[ -z $ROUTEROS_SSH_POR
 fi
 
 if [[ -n $1 ]] && [[ -n $2 ]] && [[ -n $3 ]] && [[ -n $4 ]] && [[ -n $5 ]]; then
-        # Called as acme.sh deploy hook: domain keyfile certfile cafile fullchain
+        # Manual invocation with explicit args: domain keyfile certfile cafile fullchain
         DOMAIN=$1
         KEY=$2
         CERTIFICATE=$5
+elif [[ -n $Le_Domain ]] && [[ -n $CERT_KEY_PATH ]] && [[ -n $CERT_FULLCHAIN_PATH ]]; then
+        # Called as acme.sh --renew-hook: env vars are set by acme.sh
+        DOMAIN=$Le_Domain
+        KEY=$CERT_KEY_PATH
+        CERTIFICATE=$CERT_FULLCHAIN_PATH
 else
         # Manual invocation: use DOMAIN from config and detect paths
         if [[ -z $DOMAIN ]]; then
